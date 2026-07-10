@@ -271,12 +271,13 @@ void setupHTTPSever()
     if (apMode)
     {
       // captive portal: send OS "sign in to network" probes back to the device's own page
-      Serial.println(" --> captive portal redirect");
+      //Serial.println(" --> captive portal redirect"); // this was happening a lot!  make it optional and print what domain was requested
       AsyncWebServerResponse *response = request->beginResponse(302);
       response->addHeader("Location", "http://" + ip.toString() + "/");
       request->send(response);
       return;
     }
+    // these never get called in AP mode because of return above
     Serial.println(" --> send(404) called");
     request->send(404);
   });
