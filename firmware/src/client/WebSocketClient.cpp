@@ -28,6 +28,10 @@ void WebSocketClient::handleData(void *data, size_t len)
     memset(datagram.message, 0, 233);
     datagram.type = 'c';
     memcpy(&datagram.message, data, len);
+    datagram.message[len] = 0x0d;  // tack on a carriage return at the end
+    len++;
+    datagram.message[len] = 0x0a;  // tack on a newline at the end
+    len++;
     len = len+DATAGRAM_HEADER;
 
     //TODO  work on ACK

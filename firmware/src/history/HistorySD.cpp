@@ -33,15 +33,33 @@ void HistorySD::record(struct Datagram datagram, size_t len)
   // Parse datagram entries into char[] that ArduinoJSON can handle (needs NULL terminated)
   char charMsg[len - DATAGRAM_HEADER + 1];
   memcpy(charMsg, (const char *)datagram.message, len - DATAGRAM_HEADER);
-  charMsg[len - DATAGRAM_HEADER] = 0;
-  char dest[7] = {0};
-  memcpy(dest, datagram.destination, 6);
+  charMsg[len - DATAGRAM_HEADER] = 0; // terminate with a 0
+  //char dest[7] = {0};
+  //memcpy(dest, datagram.destination, 6); // dirty copying 4 bytes of destination, type byte, message length byte
+  char dest[ADDR_LENGTH + 1];
+  dest[ADDR_LENGTH] = 0; // make sure last byte of dest is a 0
+  memcpy(dest, datagram.destination, ADDR_LENGTH);
 
   // Create the JSON
   doc["d"] = dest;
   doc["t"] = datagram.type;
+  charMsg[0]=0x30; // don't send actual 0x00 in a string, WebSocketClient.cpp tries to do that
+  charMsg[1]=0x30; // don't send actual 0x00 in a string, WebSocketClient.cpp tries to do that
   doc["m"] = charMsg;
   doc["l"] = len - DATAGRAM_HEADER;
+        /*Serial.print("hist dest: ");
+        for(int i = 0; i < ADDR_LENGTH; i++){ Serial.printf("%02x", dest[i]); }
+        Serial.printf(" type: %c charMsg: ", datagram.type);
+        for(int i = 0; i < len - DATAGRAM_HEADER; i++){ Serial.printf("%02x", charMsg[i]); }
+        Serial.printf("\"");
+        for(int i = 0; i < len - DATAGRAM_HEADER; i++){
+          if (charMsg[i] == 0) {
+            charMsg[i] = 0x30; // hack to change NUL to 0 until figure out where it came from
+            Serial.print("x");
+          }
+          Serial.printf("%c", charMsg[i]);
+        }
+        Serial.printf("\"\r\n");*/
 
     File log = SD.open(log_path, FILE_APPEND);
     if (log)

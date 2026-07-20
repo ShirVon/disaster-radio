@@ -433,7 +433,7 @@ void Console::processLine(char *message, size_t len)
   #ifndef SIM
   else if (username.length() > 0)
   {
-    msgLen = sprintf((char *)response.message, "00c|<%s>%s", username.c_str(), msgBuff);
+    msgLen = sprintf((char *)response.message, "00c|<%s> %s", username.c_str(), msgBuff);
     memcpy(response.destination, BROADCAST, ADDR_LENGTH);
     response.type = 'c';
     server->transmit(this, response, msgLen + DATAGRAM_HEADER);
