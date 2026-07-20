@@ -28,7 +28,7 @@ class WebSocketppClient : public DisasterClient
 public:
     WebSocketppClient();
     
-    void receive(struct Datagram datagram, size_t len);
+    void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
     void on_message(connection_hdl hdl, WebSocketppServer::message_ptr msg);
     void on_http(connection_hdl hdl, std::string root);
     void loop();

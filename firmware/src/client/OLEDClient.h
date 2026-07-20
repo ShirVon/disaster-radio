@@ -27,7 +27,7 @@ public:
   virtual ~OLEDClient();
 
   void loop();
-  void receive(struct Datagram datagram, size_t len);
+  void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
 };
 
 #endif

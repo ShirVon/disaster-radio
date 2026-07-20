@@ -10,7 +10,7 @@ connection_map client_map;
 WebSocketppClient::WebSocketppClient(){}//WebSocketppServer *wss)
 //  : ws_server{wss} {};
 
-void WebSocketppClient::receive(struct Datagram datagram, size_t len)
+void WebSocketppClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
     unsigned char buf[len-DATAGRAM_HEADER];
     memcpy(buf, &datagram.message, sizeof(buf));
@@ -41,7 +41,7 @@ void WebSocketppClient::on_message(connection_hdl hdl, WebSocketppServer::messag
   ws.send(con, val.str(), websocketpp::frame::opcode::text);
 
   // Send message to other connected layer 3 clients
-  struct Datagram datagram = {0xff, 0xff, 0xff, 0xff};
+  struct __attribute__((__packed__)) Datagram datagram = {0xff, 0xff, 0xff, 0xff};
   datagram.type = 'c';
   memcpy(&datagram.message, message.c_str(), message.length());
   server->transmit(this, datagram, DATAGRAM_HEADER+message.length());

@@ -24,7 +24,7 @@ class SocatClient : public DisasterClient
     bool init();
     void loop();
 
-    void receive(struct Datagram datagram, size_t len);
+    void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
 
   private:
     std::string portname;

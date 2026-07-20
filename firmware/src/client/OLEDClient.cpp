@@ -28,7 +28,7 @@ void OLEDClient::loop()
   }
 }
 
-void OLEDClient::receive(struct Datagram datagram, size_t len)
+void OLEDClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
   String message = "";
   if (datagram.type == 'c')

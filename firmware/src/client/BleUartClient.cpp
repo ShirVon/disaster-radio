@@ -43,7 +43,7 @@ bool dataRcvd = false;
 extern BleUartClient ble_client;
 void (*connectCallback)(BleUartClient *);
 
-void BleUartClient::receive(struct Datagram datagram, size_t len)
+void BleUartClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
   if (deviceConnected)
   {
@@ -127,7 +127,7 @@ void BleUartClient::handleData(void *data, size_t len)
     ESP.restart();
   }
 
-  struct Datagram datagram = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+  struct __attribute__((__packed__)) Datagram datagram = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
   memset(datagram.message, 0, 233);
   datagram.type = msg[2];
   memcpy(&datagram.message, data, len);

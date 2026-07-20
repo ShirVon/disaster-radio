@@ -2,7 +2,7 @@
 #include "TCPClient.h"
 #include <LoRaLayer2.h>
 
-void TCPClient::receive(struct Datagram datagram, size_t len)
+void TCPClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
     client->add((char *)datagram.message, len - DATAGRAM_HEADER);
     client->send();
@@ -10,7 +10,7 @@ void TCPClient::receive(struct Datagram datagram, size_t len)
 
 void TCPClient::handleData(void *data, size_t len)
 {
-  struct Datagram datagram;
+  struct __attribute__((__packed__)) Datagram datagram;
   memcpy(datagram.destination, BROADCAST, ADDR_LENGTH);
   datagram.type = 'c';
   memcpy(datagram.message, data, len);

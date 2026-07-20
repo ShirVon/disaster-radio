@@ -12,7 +12,7 @@ void GPSClient::loop()
     long elapsed = millis() - beacon_last;
     if (elapsed > beacon_period && beacon_period > 0)
     {
-        struct Datagram datagram = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+        struct __attribute__((__packed__)) Datagram datagram = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
         memset(datagram.message, 0, 233);
 		size_t len;
         if (gps.location.isValid() && gps.location.age() < beacon_period)
@@ -56,7 +56,7 @@ void GPSClient::setBeaconPeriod(long new_period)
 	beacon_period = new_period;
 }
 
-void GPSClient::receive(struct Datagram datagram, size_t len)
+void GPSClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
   Datagram response;
   int msgLen;

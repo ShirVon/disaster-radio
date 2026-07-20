@@ -47,7 +47,7 @@ void StreamClient::loop()
         input[inputLength] = '\n';
         inputLength++;
 
-        struct Datagram datagram;
+        struct __attribute__((__packed__)) Datagram datagram;
         memcpy(datagram.destination, BROADCAST, ADDR_LENGTH);
         datagram.type = 'c';
         memcpy(datagram.message, input, inputLength);
@@ -64,7 +64,7 @@ void StreamClient::loop()
     }
 };
 
-void StreamClient::receive(struct Datagram datagram, size_t len)
+void StreamClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
   stream->write(datagram.message, len - DATAGRAM_HEADER);
 };

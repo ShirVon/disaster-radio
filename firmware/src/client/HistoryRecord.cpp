@@ -1,6 +1,6 @@
 #include "HistoryRecord.h"
 
-void HistoryRecord::receive(struct Datagram datagram, size_t len)
+void HistoryRecord::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
     if (history)
     {

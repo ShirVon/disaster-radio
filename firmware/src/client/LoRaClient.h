@@ -15,7 +15,7 @@ public:
     bool init();
     void loop();
 
-    void receive(struct Datagram datagram, size_t len);
+    void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
 
 private:
     LL2Class *LL2;

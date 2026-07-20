@@ -28,7 +28,7 @@ public:
     void loop();
 	void setUsername(String username);
     void setBeaconPeriod(long new_period);
-    void receive(struct Datagram datagram, size_t len);
+    void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
 };
 
 #endif

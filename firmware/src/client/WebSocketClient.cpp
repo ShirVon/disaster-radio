@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 
-void WebSocketClient::receive(struct Datagram datagram, size_t len)
+void WebSocketClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
     unsigned char buf[len-DATAGRAM_HEADER]; //= {'\0'};
     memcpy(buf, &datagram.message, sizeof(buf));
@@ -24,7 +24,7 @@ void WebSocketClient::handleError(uint16_t code, const char *message)
 void WebSocketClient::handleData(void *data, size_t len)
 {
     // assume this is a broadcast message for now 
-    struct Datagram datagram = {0xff, 0xff, 0xff, 0xff};
+    struct __attribute__((__packed__)) Datagram datagram = {0xff, 0xff, 0xff, 0xff};
     memset(datagram.message, 0, 233);
     datagram.type = 'c';
     memcpy(&datagram.message, data, len);

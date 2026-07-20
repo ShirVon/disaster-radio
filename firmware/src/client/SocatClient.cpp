@@ -3,7 +3,7 @@
 
 int SocatClient::set_interface_attribs(int speed, int parity)
 {
-  struct termios tty;
+  struct __attribute__((__packed__)) termios tty;
   if (tcgetattr (tty_file, &tty) != 0)
   {
     //Serial.printf("error %d from tcgetattr", errno);
@@ -67,7 +67,7 @@ void SocatClient::loop(){
     else if (length > 0)
     {
       buffer[length] = '\0';
-      struct Datagram datagram = { 0xff, 0xff, 0xff, 0xff };
+      struct __attribute__((__packed__)) Datagram datagram = { 0xff, 0xff, 0xff, 0xff };
       datagram.type = 'c';
       memcpy(datagram.message, buffer, length);
       server->transmit(this, datagram, length + DATAGRAM_HEADER);
@@ -78,7 +78,7 @@ void SocatClient::loop(){
   }
 }
 
-void SocatClient::receive(struct Datagram datagram, size_t len)
+void SocatClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
   write(tty_file, datagram.message, len - DATAGRAM_HEADER);
 };

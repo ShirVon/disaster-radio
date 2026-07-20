@@ -13,7 +13,7 @@ void LoRaClient::broadcastRoutes()
 
     // message: 2-byte fixed ID + "r|" + 6 bytes per route entry
     // 6 bytes per entry: 4-byte destination address + 1-byte distance + 1-byte metric
-    struct Datagram datagram = {0};
+    struct __attribute__((__packed__)) Datagram datagram = {0};
     datagram.type = 'r';
     uint8_t *msg = datagram.message;
     msg[0] = 0x0f;
@@ -37,7 +37,7 @@ void LoRaClient::broadcastRoutes()
 void LoRaClient::loop()
 {
     LL2->daemon();
-    struct Packet packet = LL2->readData();
+    struct __attribute__((__packed__)) Packet packet = LL2->readData();
     if (packet.totalLength > HEADER_LENGTH)
     {
         server->transmit(this, packet.datagram, packet.totalLength - HEADER_LENGTH);
@@ -51,9 +51,9 @@ void LoRaClient::loop()
     }
 }
 
-void LoRaClient::receive(struct Datagram datagram, size_t len)
+void LoRaClient::receive(struct __attribute__((__packed__)) Datagram datagram, size_t len)
 {
-    struct Datagram response = {0};
+    struct __attribute__((__packed__)) Datagram response = {0};
     int value;
     double value2;
     long value3;

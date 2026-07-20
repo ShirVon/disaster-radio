@@ -26,7 +26,7 @@ class BleUartClient : public DisasterClient
   BleUartClient *client;
 
 public:
-  void receive(struct Datagram datagram, size_t len);
+  void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
 
   void handleData(void *data, size_t len);
   void loop();

@@ -14,7 +14,7 @@ public:
     WebSocketClient(AsyncWebSocketClient *c)
         : client{c} {};
 
-    void receive(struct Datagram datagram, size_t len);
+    void receive(struct __attribute__((__packed__)) Datagram datagram, size_t len);
 
     // bool interactive() { return true; };
 
