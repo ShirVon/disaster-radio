@@ -394,10 +394,10 @@ void setupWebSocket()
 void setupLoRa()
 {
   char cfgStr[MESSAGE_LENGTH];
-#ifdef LORA_CS
+  #ifdef LORA_CS
   Serial.println("* Initializing LoRa...");
-  #ifdef LOPY4
-  SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI); //LORA_CS);
+  #if defined(LOPY4) || defined(ESP32_V3)
+  SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_CS);
   #endif
   
   #if defined (ARDUINO_LORA)
@@ -409,6 +409,11 @@ void setupLoRa()
   #endif
   
   #if defined ( RL_SX1276 ) || defined ( RL_SX1262 )
+  #ifdef ESP32_V3
+  pinMode(36, OUTPUT);
+  digitalWrite(36, LOW);  // Vext ON (active low) - powers LoRa radio + OLED on Heltec V3
+  delay(300);
+  #endif
   pinMode(LORA_CS, OUTPUT);
   digitalWrite(LORA_CS, LOW);
   #ifdef DUAL_LORA

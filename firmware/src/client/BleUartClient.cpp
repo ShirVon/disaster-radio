@@ -282,7 +282,7 @@ void BleUartClient::init()
   // Initialize BLE and set output power
   BLEDevice::init(apName);
   BLEDevice::setMTU(260);
-  BLEDevice::setPower(ESP_PWR_LVL_P7);
+  BLEDevice::setPower(ESP_PWR_LVL_P9);
 
 #ifdef DEBUG_OUT
   BLEAddress thisAddress = BLEDevice::getAddress();

@@ -11,16 +11,15 @@ def build_web(source, target, env):
 
     # Source nvm and run npm install + build. Uses a login shell so nvm is available.
     cmd = (
-        'export NVM_DIR="${NVM_DIR:-$HOME/.nvm}" && '
-        '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && '
+        'export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"; '
+        'if [ -s "$NVM_DIR/nvm.sh" ]; then . "$NVM_DIR/nvm.sh" && nvm use; fi; '
         f'cd "{web_dir}" && '
-        'nvm use && '
         'npm install && '
         'npm run build'
     )
 
     print(">>> Building web app...")
-    result = subprocess.run(["bash", "-lc", cmd], check=False)
+    result = subprocess.run([r"C:\Program Files\Git\bin\bash.exe", "-lc", cmd], check=False)
     if result.returncode != 0:
         print("ERROR: Web app build failed. Filesystem upload aborted.", file=sys.stderr)
         env.Exit(1)
