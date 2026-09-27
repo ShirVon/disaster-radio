@@ -12,9 +12,6 @@ web/static/build/*.gz
 web/node_modules
 makeEspArduino/
 lib/**
-firmware/lib/**
-!firmware/lib/LoRaLayer2/
-!firmware/lib/LoRaLayer2/**
 hardware/board_esp32_v3/**
 .pio
 .vscode
