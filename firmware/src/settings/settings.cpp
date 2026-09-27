@@ -5,7 +5,7 @@ Preferences preferences;
 String username = "";
 bool useBLE = true;
 int txPower = 17;
-int loraFrq = 915;
+int loraFrq = 866;;
 int spreadingFactor = 9;
 double dutyCycle = .1;
 long routeInterval = 10000;
